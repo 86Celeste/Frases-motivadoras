@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Luz Interior - Frases & Motivación Diaria</title>
+  
+  <!-- PWA & Mobile Web App Meta Tags -->
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Luz Interior">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+            }
+          },
+          animation: {
+            'breathe': 'breathe 8s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+          },
+          keyframes: {
+            breathe: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.35)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500;1,600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-serif-quote {
+      font-family: 'Playfair Display', serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+
+  <!-- App Header -->
+  <header class="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-6">
+    <div class="max-w-xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-purple-900/30">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold leading-tight text-white tracking-wide">Luz Interior</h1>
+          <p class="text-[11px] text-purple-300 font-medium">Inspiración y fuerza para cada día</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-1.5">
+        <button onclick="handleInstallApp()" id="btnInstallApp" title="Instalar en celular" class="flex items-center gap-1 text-xs font-semibold bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 px-2.5 py-1.5 rounded-lg transition-colors">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Instalar</span>
+        </button>
+        <button onclick="shareAppWhatsApp()" title="Compartir app por WhatsApp" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+          <i data-lucide="share-2" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Scrollable Content -->
+  <main class="flex-1 overflow-y-auto pb-24 max-w-xl w-full mx-auto p-4 sm:p-5 space-y-5">
+
+    <!-- VIEW 1: EXPLORADOR DE FRASES -->
+    <section id="view-quotes" class="tab-view block space-y-4">
+      
+      <!-- Category Pills -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1 pt-0.5">
+        <button onclick="filterCategory('todas')" class="cat-pill active-cat text-xs font-semibold px-3 py-1.5 rounded-full bg-purple-600 text-white whitespace-nowrap transition-all shadow-sm">
+          ✨ Todas
+        </button>
+        <button onclick="filterCategory('amor_propio')" class="cat-pill text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap transition-all">
+          💖 Amor Propio
+        </button>
+        <button onclick="filterCategory('superacion')" class="cat-pill text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap transition-all">
+          🦁 Fuerza & Superación
+        </button>
+        <button onclick="filterCategory('calma')" class="cat-pill text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap transition-all">
+          🍃 Calma & Ansiedad
+        </button>
+        <button onclick="filterCategory('metas')" class="cat-pill text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap transition-all">
+          🎯 Motivación & Éxito
+        </button>
+        <button onclick="filterCategory('gratitud')" class="cat-pill text-xs font-semibold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 whitespace-nowrap transition-all">
+          🌸 Gratitud
+        </button>
+      </div>
+
+      <!-- Big Aesthetic Quote Card -->
+      <div id="quoteCardContainer" class="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-br from-purple-900/70 via-indigo-900/60 to-slate-900 border border-purple-500/30 shadow-2xl shadow-purple-950/50 flex flex-col justify-between min-h-[360px] transition-all duration-300">
+        
+        <!-- Background light effect -->
+        <div class="absolute -top-16 -right-16 w-44 h-44 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-16 -left-16 w-44 h-44 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Top card info: Category and audio status -->
+        <div class="relative z-10 flex items-center justify-between">
+          <span id="quoteCardCategory" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 text-purple-200 border border-white/10 backdrop-blur-md">
+            ✨ Inspiración Diaria
+          </span>
+          <div class="flex items-center gap-1">
+            <button onclick="toggleCardTheme()" title="Cambiar color de fondo" class="p-2 text-purple-200/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-full backdrop-blur-md transition-colors">
+              <i data-lucide="palette" class="w-4 h-4"></i>
+            </button>
+            <button id="btnVoiceListen" onclick="readQuoteAloud()" title="Escuchar frase con voz" class="p-2 text-purple-200/80 hover:text-white bg-white/5 hover:bg-white/10 rounded-full backdrop-blur-md transition-colors">
+              <i data-lucide="volume-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quote Body -->
+        <div class="relative z-10 my-6 text-center">
+          <i data-lucide="quote" class="w-7 h-7 text-purple-400/40 mx-auto mb-3"></i>
+          <p id="quoteCardText" class="font-serif-quote italic text-xl sm:text-2xl font-medium text-purple-50 leading-relaxed drop-shadow-sm">
+            "Cargando tu frase motivacional..."
+          </p>
+          <p id="quoteCardAuthor" class="mt-4 text-xs sm:text-sm font-semibold text-purple-300 tracking-wider uppercase">
+            — Autor
+          </p>
+        </div>
+
+        <!-- Card Bottom Actions -->
+        <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between gap-2">
+          <!-- Favorite button -->
+          <button id="btnFavQuote" onclick="toggleCurrentFavorite()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all active:scale-95 backdrop-blur-sm">
+            <i id="favIcon" data-lucide="heart" class="w-4 h-4"></i>
+            <span id="favText">Guardar</span>
+          </button>
+
+          <div class="flex items-center gap-1.5">
+            <!-- Share WhatsApp -->
+            <button onclick="shareQuoteWhatsApp()" class="flex items-center gap-1 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition-all active:scale-95 shadow-md shadow-emerald-950/40">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>WhatsApp</span>
+            </button>
+
+            <!-- Download Image -->
+            <button onclick="downloadQuoteImage()" title="Descargar como imagen para Estados" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all active:scale-95 backdrop-blur-sm">
+              <i data-lucide="download" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button: Next Quote -->
+      <button onclick="generateRandomQuote(true)" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:opacity-95 text-white font-bold py-3.5 px-5 rounded-2xl shadow-lg shadow-purple-900/40 transition-all flex items-center justify-center gap-2 text-sm active:scale-[0.99]">
+        <i data-lucide="sparkle" class="w-4 h-4 animate-spin" style="animation-duration: 4s;"></i>
+        <span>Descubrir Otra Frase</span>
+      </button>
+
+      <!-- Quick Mood Cards (Emociones) -->
+      <div class="pt-2">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-1.5">
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-purple-400"></i>
+          ¿Qué necesita tu corazón hoy?
+        </h3>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="pickMoodQuote('ansiedad')" class="p-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-purple-500/40 rounded-xl text-left transition-all group">
+            <span class="text-xl mb-1 block">🌿</span>
+            <strong class="text-xs text-slate-200 block group-hover:text-purple-300">Tengo ansiedad o miedo</strong>
+            <span class="text-[10px] text-slate-400">Paz mental y tranquilidad</span>
+          </button>
+          <button onclick="pickMoodQuote('cansancio')" class="p-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-purple-500/40 rounded-xl text-left transition-all group">
+            <span class="text-xl mb-1 block">🔋</span>
+            <strong class="text-xs text-slate-200 block group-hover:text-purple-300">Me siento agotada/o</strong>
+            <span class="text-[10px] text-slate-400">Recarga de energía y ánimo</span>
+          </button>
+          <button onclick="pickMoodQuote('dudas')" class="p-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-purple-500/40 rounded-xl text-left transition-all group">
+            <span class="text-xl mb-1 block">💎</span>
+            <strong class="text-xs text-slate-200 block group-hover:text-purple-300">Dudo de mi capacidad</strong>
+            <span class="text-[10px] text-slate-400">Autoestima y valor personal</span>
+          </button>
+          <button onclick="pickMoodQuote('arrancar')" class="p-3 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-purple-500/40 rounded-xl text-left transition-all group">
+            <span class="text-xl mb-1 block">🚀</span>
+            <strong class="text-xs text-slate-200 block group-hover:text-purple-300">Necesito empezar ya</strong>
+            <span class="text-[10px] text-slate-400">Disciplina y enfoque</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: PAUSA DE RESPIRACIÓN Y CALMA -->
+    <section id="view-calm" class="tab-view hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 text-center space-y-5">
+        <div>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            Respiración Guiada 4-4-4
+          </span>
+          <h2 class="text-lg font-bold text-white mt-2">Pausa para tu Mente</h2>
+          <p class="text-xs text-slate-400 max-w-xs mx-auto">Regálate 1 minuto. Inhala cuando el círculo crezca, retén el aire y exhala suavemente al encogerse.</p>
+        </div>
+
+        <!-- Breathing Visual Circle -->
+        <div class="py-6 flex flex-col items-center justify-center">
+          <div class="relative w-48 h-48 flex items-center justify-center">
+            <div id="breathePulseRing" class="absolute inset-0 rounded-full bg-purple-500/20 blur-xl"></div>
+            <div id="breatheMainCircle" class="w-36 h-36 rounded-full bg-gradient-to-tr from-purple-600 via-indigo-500 to-emerald-400 flex flex-col items-center justify-center text-white shadow-xl transition-transform duration-1000">
+              <span id="breathePhaseText" class="text-sm font-extrabold uppercase tracking-widest">Inhala</span>
+              <span id="breatheSecondsCount" class="text-2xl font-black mt-0.5">4</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-2">
+          <button id="btnStartBreath" onclick="toggleBreatheGuide()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2">
+            <i data-lucide="play" class="w-4 h-4"></i>
+            <span id="breatheBtnText">Iniciar Pausa</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: MIS FAVORITOS -->
+    <section id="view-favorites" class="tab-view hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-bold text-white">Tus Frases Guardadas</h2>
+          <p class="text-xs text-slate-400">Palabras que te inspiran en tus momentos clave.</p>
+        </div>
+        <span id="favCountBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+          0 frases
+        </span>
+      </div>
+
+      <div id="favoritesListContainer" class="space-y-3">
+        <!-- Dynamically rendered favorites -->
+      </div>
+    </section>
+
+    <!-- VIEW 4: CREAR MI PROPIA AFIRMACIÓN -->
+    <section id="view-custom" class="tab-view hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div>
+          <h2 class="text-base font-bold text-white">Escribe tu Propia Afirmación</h2>
+          <p class="text-xs text-slate-400">Escribe las palabras que hoy necesitas repetirte a ti misma/o.</p>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Tu frase o afirmación positiva *</label>
+            <textarea id="customQuoteInput" rows="3" placeholder="Ej. Hoy elijo confiar en mi camino y recordar lo fuerte que soy..." class="w-full text-xs sm:text-sm px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Firma / Autor (o déjalo como 'Yo')</label>
+            <input type="text" id="customAuthorInput" placeholder="Ej. Mi yo del futuro, Celeste..." class="w-full text-xs sm:text-sm px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+          </div>
+        </div>
+
+        <button onclick="saveCustomAffirmation()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-md shadow-purple-950 transition-all">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i> Guardar mi afirmación
+        </button>
+      </div>
+
+      <!-- List of custom affirmations -->
+      <div id="customListContainer" class="space-y-3"></div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-3 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-4 gap-1">
+      <button onclick="switchTab('quotes')" id="nav-btn-quotes" class="nav-tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-purple-400 font-semibold transition-all">
+        <i data-lucide="sparkles" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px]">Frases</span>
+      </button>
+      <button onclick="switchTab('calm')" id="nav-btn-calm" class="nav-tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-slate-400 font-medium hover:text-white transition-all">
+        <i data-lucide="wind" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px]">Calma</span>
+      </button>
+      <button onclick="switchTab('favorites')" id="nav-btn-favorites" class="nav-tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-slate-400 font-medium hover:text-white transition-all">
+        <i data-lucide="heart" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px]">Favoritas</span>
+      </button>
+      <button onclick="switchTab('custom')" id="nav-btn-custom" class="nav-tab-btn flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-slate-400 font-medium hover:text-white transition-all">
+        <i data-lucide="feather" class="w-5 h-5 mb-0.5"></i>
+        <span class="text-[10px]">Escribir</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none px-4 w-full max-w-sm"></div>
+
+  <!-- Hidden Canvas for Image Generation -->
+  <canvas id="quoteCanvas" class="hidden"></canvas>
+
+  <script>
+    /* Database of inspirational, motivational and self-help quotes */
+    const quoteDatabase = [
+      // Amor Propio
+      { id: 'q1', text: 'Date permiso para no tener todo resuelto hoy. El progreso sigue siendo progreso, por pequeño que parezca.', author: 'Amor Propio', category: 'amor_propio' },
+      { id: 'q2', text: 'No te compares con el capítulo 20 de otra persona cuando tú estás en tu capítulo 1.', author: 'Crecimiento Personal', category: 'amor_propio' },
+      { id: 'q3', text: 'La persona más importante con la que hablarás hoy eres tú misma. Trátate con ternura y respeto.', author: 'Luz Interior', category: 'amor_propio' },
+      { id: 'q4', text: 'Poner límites no es egoísmo, es el acto de amor propio más valiente que puedes ejercer.', author: 'Sabiduría Emocional', category: 'amor_propio' },
+      { id: 'q5', text: 'Eres suficiente exactamente como eres hoy, mientras sigues trabajando en quien quieres ser mañana.', author: 'Autoestima', category: 'amor_propio' },
+
+      // Fuerza & Superación
+      { id: 'q6', text: 'Las tormentas no duran para siempre. Has superado cada uno de tus días difíciles hasta hoy: tu récord es del 100%.', author: 'Superación', category: 'superacion' },
+      { id: 'q7', text: 'A veces caer es necesario para recordar qué es lo que de verdad vale la pena defender al levantarse.', author: 'Resiliencia', category: 'superacion' },
+      { id: 'q8', text: 'El coraje no siempre ruge. A veces es esa voz pequeña al final del día que dice: lo intentaré de nuevo mañana.', author: 'Mary Anne Radmacher', category: 'superacion' },
+      { id: 'q9', text: 'No tienes que ser invencible para ser valiente; solo tienes que dar un paso más.', author: 'Fuerza Interior', category: 'superacion' },
+      { id: 'q10', text: 'Detrás de tus mayores miedos siempre te espera la versión más fuerte y auténtica de ti.', author: 'Transformación', category: 'superacion' },
+
+      // Calma & Ansiedad
+      { id: 'q11', text: 'Inhala paz, exhala el peso de lo que no puedes controlar. Este momento presente es todo lo que necesitas sostener.', author: 'Paz Interior', category: 'calma' },
+      { id: 'q12', text: 'No tienes que responder a todas las urgencias del mundo hoy. Cuidar tu calma también es productivo.', author: 'Serenidad', category: 'calma' },
+      { id: 'q13', text: 'La mente que se precipita al futuro se llena de miedos que aún no existen. Vuelve aquí, estás a salvo.', author: 'Mindfulness', category: 'calma' },
+      { id: 'q14', text: 'Permítete una pausa. Descansar no significa rendirse, significa renovar fuerzas para volar más alto.', author: 'Bienestar', category: 'calma' },
+
+      // Metas & Motivación
+      { id: 'q15', text: 'El secreto de avanzar es simplemente comenzar. No esperes el momento perfecto, haz perfecto el momento.', author: 'Mark Twain', category: 'metas' },
+      { id: 'q16', text: 'La disciplina es el puente entre tus sueños de hoy y tu realidad de mañana.', author: 'Enfoque', category: 'metas' },
+      { id: 'q17', text: 'Hazlo con miedo, hazlo con dudas, pero hazlo. La acción disuelve la incertidumbre.', author: 'Impulso Emprendedor', category: 'metas' },
+      { id: 'q18', text: 'Pequeñas acciones constantes derrotan a las grandes intenciones esporádicas. Paso a paso.', author: 'Hábitos Ganadores', category: 'metas' },
+
+      // Gratitud
+      { id: 'q19', text: 'Cuando comienzas a agradecer lo que ya tienes, abres la puerta para que lleguen cosas aún más hermosas.', author: 'Gratitud', category: 'gratitud' },
+      { id: 'q20', text: 'La felicidad no es tener todo, es saber encontrar belleza y milagros en los detalles más sencillos.', author: 'Plenitud', category: 'gratitud' }
+    ];
+
+    /* Card background gradients */
+    const cardGradients = [
+      'from-purple-900/80 via-indigo-900/70 to-slate-900 border-purple-500/30',
+      'from-rose-900/80 via-purple-950 to-slate-900 border-rose-500/30',
+      'from-emerald-950 via-teal-900/70 to-slate-900 border-emerald-500/30',
+      'from-blue-950 via-indigo-950 to-slate-900 border-blue-500/30',
+      'from-amber-950/80 via-purple-950 to-slate-900 border-amber-500/30'
+    ];
+
+    let currentGradientIndex = 0;
+    let currentCategory = 'todas';
+    let currentQuote = null;
+    let savedFavorites = [];
+    let customAffirmations = [];
+    let deferredInstallPrompt = null;
+
+    /* Breathing exercise timer variables */
+    let breatheTimer = null;
+    let breatheActive = false;
+
+    function initApp() {
+      // Load saved favorites
+      const storedFavs = localStorage.getItem('luz_interior_favorites');
+      if (storedFavs) {
+        try { savedFavorites = JSON.parse(storedFavs); } catch (e) { savedFavorites = []; }
+      }
+
+      // Load custom affirmations
+      const storedCustom = localStorage.getItem('luz_interior_custom');
+      if (storedCustom) {
+        try { customAffirmations = JSON.parse(storedCustom); } catch (e) { customAffirmations = []; }
+      }
+
+      generateRandomQuote(false);
+      renderFavoritesList();
+      renderCustomList();
+      setupPWA();
+      lucide.createIcons();
+    }
+
+    function getAllAvailableQuotes() {
+      return [...quoteDatabase, ...customAffirmations];
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.remove('bg-purple-600', 'text-white');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      event.target.classList.remove('bg-slate-800', 'text-slate-300');
+      event.target.classList.add('bg-purple-600', 'text-white');
+
+      generateRandomQuote(true);
+    }
+
+    function generateRandomQuote(animate = true) {
+      let pool = getAllAvailableQuotes();
+      if (currentCategory !== 'todas') {
+        pool = pool.filter(q => q.category === currentCategory);
+      }
+      if (pool.length === 0) pool = quoteDatabase;
+
+      // Filter out current quote if pool has > 1
+      if (currentQuote && pool.length > 1) {
+        pool = pool.filter(q => q.id !== currentQuote.id);
+      }
+
+      const selected = pool[Math.floor(Math.random() * pool.length)];
+      displayQuote(selected, animate);
+    }
+
+    function pickMoodQuote(mood) {
+      switchTab('quotes');
+      let cat = 'calma';
+      if (mood === 'ansiedad') cat = 'calma';
+      else if (mood === 'cansancio') cat = 'superacion';
+      else if (mood === 'dudas') cat = 'amor_propio';
+      else if (mood === 'arrancar') cat = 'metas';
+
+      filterCategory(cat);
+      showToast('Seleccionamos una frase especialmente para este momento');
+    }
+
+    function displayQuote(quote, animate = true) {
+      currentQuote = quote;
+      const textEl = document.getElementById('quoteCardText');
+      const authorEl = document.getElementById('quoteCardAuthor');
+      const catEl = document.getElementById('quoteCardCategory');
+
+      if (animate) {
+        textEl.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          updateQuoteCardContent(quote);
+          textEl.classList.remove('opacity-0', 'scale-95');
+        }, 180);
+      } else {
+        updateQuoteCardContent(quote);
+      }
+    }
+
+    function updateQuoteCardContent(quote) {
+      document.getElementById('quoteCardText').textContent = `"${quote.text}"`;
+      document.getElementById('quoteCardAuthor').textContent = `— ${quote.author}`;
+      
+      const catNames = {
+        'amor_propio': '💖 Amor Propio',
+        'superacion': '🦁 Superación',
+        'calma': '🍃 Calma & Ansiedad',
+        'metas': '🎯 Motivación',
+        'gratitud': '🌸 Gratitud',
+        'propia': '✍️ Afirmación Personal'
+      };
+      document.getElementById('quoteCardCategory').textContent = catNames[quote.category] || '✨ Luz Interior';
+
+      updateFavButtonState();
+      lucide.createIcons();
+    }
+
+    function toggleCardTheme() {
+      currentGradientIndex = (currentGradientIndex + 1) % cardGradients.length;
+      const container = document.getElementById('quoteCardContainer');
+      // Reset classes
+      container.className = `relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-br ${cardGradients[currentGradientIndex]} shadow-2xl flex flex-col justify-between min-h-[360px] transition-all duration-500`;
+    }
+
+    /* Text-to-Speech (Voz en Español) */
+    function readQuoteAloud() {
+      if (!('speechSynthesis' in window)) {
+        showToast('Tu navegador no admite lectura de voz', 'info');
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      if (!currentQuote) return;
+
+      const utterance = new SpeechSynthesisUtterance(`${currentQuote.text}. ${currentQuote.author}`);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9; // Slightly slower, calm cadence
+      utterance.pitch = 1.0;
+
+      // Find Spanish voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const spanishVoice = voices.find(v => v.lang.startsWith('es'));
+      if (spanishVoice) utterance.voice = spanishVoice;
+
+      window.speechSynthesis.speak(utterance);
+      showToast('Reproduciendo frase con voz...');
+    }
+
+    /* Favoritos */
+    function updateFavButtonState() {
+      if (!currentQuote) return;
+      const isFav = savedFavorites.some(f => f.id === currentQuote.id || f.text === currentQuote.text);
+      const icon = document.getElementById('favIcon');
+      const text = document.getElementById('favText');
+
+      if (isFav) {
+        icon.classList.add('text-rose-400', 'fill-rose-400');
+        text.textContent = 'Guardada';
+      } else {
+        icon.classList.remove('text-rose-400', 'fill-rose-400');
+        text.textContent = 'Guardar';
+      }
+    }
+
+    function toggleCurrentFavorite() {
+      if (!currentQuote) return;
+      const index = savedFavorites.findIndex(f => f.id === currentQuote.id || f.text === currentQuote.text);
+
+      if (index >= 0) {
+        savedFavorites.splice(index, 1);
+        showToast('Frase eliminada de favoritas');
+      } else {
+        savedFavorites.unshift(currentQuote);
+        showToast('¡Frase guardada en tus favoritas! ❤️', 'success');
+      }
+
+      localStorage.setItem('luz_interior_favorites', JSON.stringify(savedFavorites));
+      updateFavButtonState();
+      renderFavoritesList();
+      lucide.createIcons();
+    }
+
+    function renderFavoritesList() {
+      const container = document.getElementById('favoritesListContainer');
+      const badge = document.getElementById('favCountBadge');
+      badge.textContent = `${savedFavorites.length} frase${savedFavorites.length === 1 ? '' : 's'}`;
+
+      if (savedFavorites.length === 0) {
+        container.innerHTML = `
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
+            <i data-lucide="heart-off" class="w-10 h-10 mx-auto mb-2 text-slate-600"></i>
+            <p class="text-sm font-semibold text-slate-300">Aún no tienes frases guardadas</p>
+            <p class="text-xs text-slate-500 mt-1">Toca el botón "Guardar" en la frase que te inspire para tenerla siempre a mano.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = '';
+      savedFavorites.forEach((fav, i) => {
+        const item = document.createElement('div');
+        item.className = 'bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 relative';
+        item.innerHTML = `
+          <p class="font-serif-quote italic text-sm sm:text-base text-slate-200">"${fav.text}"</p>
+          <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800">
+            <span class="font-semibold text-purple-400">— ${fav.author}</span>
+            <div class="flex items-center gap-2">
+              <button onclick="shareSpecificQuote('${encodeURIComponent(fav.text)}', '${encodeURIComponent(fav.author)}')" class="text-emerald-400 hover:text-emerald-300 p-1" title="Compartir en WhatsApp">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+              </button>
+              <button onclick="removeFavorite(${i})" class="text-slate-500 hover:text-rose-400 p-1" title="Eliminar de favoritos">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    function removeFavorite(index) {
+      savedFavorites.splice(index, 1);
+      localStorage.setItem('luz_interior_favorites', JSON.stringify(savedFavorites));
+      renderFavoritesList();
+      updateFavButtonState();
+      showToast('Eliminada de favoritos');
+    }
+
+    /* WhatsApp Sharing */
+    function shareQuoteWhatsApp() {
+      if (!currentQuote) return;
+      shareSpecificQuote(encodeURIComponent(currentQuote.text), encodeURIComponent(currentQuote.author));
+    }
+
+    function shareSpecificQuote(textEncoded, authorEncoded) {
+      const text = decodeURIComponent(textEncoded);
+      const author = decodeURIComponent(authorEncoded);
+      const message = encodeURIComponent(`✨ *Luz Interior*\n\n"${text}"\n\n— *${author}*\n\n🌿 _Enviado desde mi app de inspiración diaria._`);
+      window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+    }
+
+    function shareAppWhatsApp() {
+      const url = window.location.href;
+      const msg = encodeURIComponent(`✨ Te comparto esta hermosa aplicación de frases motivadoras, autoayuda y calma: ${url}`);
+      window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
+    }
+
+    /* Generador de Imagen para Estados (HTML5 Canvas) */
+    function downloadQuoteImage() {
+      if (!currentQuote) return;
+      showToast('Generando tarjeta para tus estados...');
+
+      const canvas = document.getElementById('quoteCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Mobile Story Resolution (1080 x 1920)
+      canvas.width = 1080;
+      canvas.height = 1920;
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
+      grad.addColorStop(0, '#1e1b4b'); // deep indigo
+      grad.addColorStop(0.5, '#2e1065'); // deep purple
+      grad.addColorStop(1, '#09090b'); // dark
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 1920);
+
+      // Decorative Stars / Circles
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.beginPath();
+      ctx.arc(200, 300, 250, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(900, 1600, 300, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Top Header Tag
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillStyle = '#c084fc';
+      ctx.textAlign = 'center';
+      ctx.fillText('✨ LUZ INTERIOR ✨', 540, 480);
+
+      // Quote Text (Wrapped lines)
+      ctx.font = 'italic 52px serif';
+      ctx.fillStyle = '#ffffff';
+      
+      const words = `"${currentQuote.text}"`.split(' ');
+      let line = '';
+      const lines = [];
+      const maxWidth = 860;
+      const lineHeight = 80;
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          lines.push(line);
+          line = words[n] + ' ';
+        } else {
+          line = testLine;
+        }
+      }
+      lines.push(line);
+
+      const totalBlockHeight = lines.length * lineHeight;
+      let startY = 960 - (totalBlockHeight / 2);
+
+      for (let k = 0; k < lines.length; k++) {
+        ctx.fillText(lines[k], 540, startY + (k * lineHeight));
+      }
+
+      // Author
+      ctx.font = 'bold 40px sans-serif';
+      ctx.fillStyle = '#d8b4fe';
+      ctx.fillText(`— ${currentQuote.author}`, 540, startY + totalBlockHeight + 70);
+
+      // Footer
+      ctx.font = '30px sans-serif';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fillText('Frase inspiradora para tu día', 540, 1720);
+
+      // Download Trigger
+      const link = document.createElement('a');
+      link.download = `frase_motivacional_${Date.now()}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('¡Imagen descargada! Lista para tus estados 📸', 'success');
+    }
+
+    /* Afirmaciones Propias */
+    function saveCustomAffirmation() {
+      const text = document.getElementById('customQuoteInput').value.trim();
+      let author = document.getElementById('customAuthorInput').value.trim();
+      if (!author) author = 'Mi afirmación';
+
+      if (!text) {
+        showToast('Escribe una afirmación antes de guardar', 'error');
+        return;
+      }
+
+      const newAff = {
+        id: 'cust_' + Date.now(),
+        text: text,
+        author: author,
+        category: 'propia'
+      };
+
+      customAffirmations.unshift(newAff);
+      localStorage.setItem('luz_interior_custom', JSON.stringify(customAffirmations));
+
+      document.getElementById('customQuoteInput').value = '';
+      document.getElementById('customAuthorInput').value = '';
+
+      renderCustomList();
+      showToast('¡Tu afirmación ha sido guardada!', 'success');
+    }
+
+    function renderCustomList() {
+      const container = document.getElementById('customListContainer');
+      if (customAffirmations.length === 0) {
+        container.innerHTML = `
+          <p class="text-xs text-slate-500 italic text-center py-3">Aún no has escrito tus propias afirmaciones.</p>
+        `;
+        return;
+      }
+
+      container.innerHTML = '<h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Tus afirmaciones escritas</h3>';
+      customAffirmations.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-2';
+        card.innerHTML = `
+          <p class="text-xs sm:text-sm text-purple-100 font-medium italic">"${item.text}"</p>
+          <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+            <span>— ${item.author}</span>
+            <div class="flex items-center gap-2">
+              <button onclick="showCustomOnMain('${item.id}')" class="text-purple-400 hover:underline">Ver en tarjeta</button>
+              <button onclick="deleteCustom(${index})" class="text-slate-500 hover:text-rose-400">Eliminar</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function showCustomOnMain(id) {
+      const found = customAffirmations.find(a => a.id === id);
+      if (found) {
+        switchTab('quotes');
+        displayQuote(found, true);
+      }
+    }
+
+    function deleteCustom(index) {
+      customAffirmations.splice(index, 1);
+      localStorage.setItem('luz_interior_custom', JSON.stringify(customAffirmations));
+      renderCustomList();
+      showToast('Afirmación eliminada');
+    }
+
+    /* Breathing Guide Logic */
+    function toggleBreatheGuide() {
+      const btn = document.getElementById('breatheBtnText');
+      const circle = document.getElementById('breatheMainCircle');
+      const phase = document.getElementById('breathePhaseText');
+      const counter = document.getElementById('breatheSecondsCount');
+
+      if (breatheActive) {
+        // Stop
+        clearInterval(breatheTimer);
+        breatheActive = false;
+        btn.textContent = 'Iniciar Pausa';
+        phase.textContent = 'Listo';
+        counter.textContent = '4';
+        circle.style.transform = 'scale(1)';
+        return;
+      }
+
+      breatheActive = true;
+      btn.textContent = 'Pausar';
+
+      let currentPhase = 'inhale'; // inhale (4s) -> hold (4s) -> exhale (4s)
+      let sec = 4;
+
+      function updateCycle() {
+        counter.textContent = sec;
+        if (currentPhase === 'inhale') {
+          phase.textContent = 'Inhala...';
+          circle.style.transform = 'scale(1.35)';
+        } else if (currentPhase === 'hold') {
+          phase.textContent = 'Sostén...';
+        } else if (currentPhase === 'exhale') {
+          phase.textContent = 'Exhala...';
+          circle.style.transform = 'scale(1)';
+        }
+
+        sec--;
+        if (sec < 0) {
+          sec = 4;
+          if (currentPhase === 'inhale') currentPhase = 'hold';
+          else if (currentPhase === 'hold') currentPhase = 'exhale';
+          else if (currentPhase === 'exhale') currentPhase = 'inhale';
+        }
+      }
+
+      updateCycle();
+      breatheTimer = setInterval(updateCycle, 1000);
+    }
+
+    /* PWA and Tab Switching */
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('text-purple-400', 'font-semibold');
+        btn.classList.add('text-slate-400', 'font-medium');
+      });
+
+      const target = document.getElementById(`view-${tabId}`);
+      if (target) target.classList.remove('hidden');
+
+      const navBtn = document.getElementById(`nav-btn-${tabId}`);
+      if (navBtn) {
+        navBtn.classList.remove('text-slate-400', 'font-medium');
+        navBtn.classList.add('text-purple-400', 'font-semibold');
+      }
+
+      if (tabId === 'favorites') renderFavoritesList();
+      if (tabId === 'custom') renderCustomList();
+
+      lucide.createIcons();
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      const bg = type === 'error' ? 'bg-rose-950/90 text-rose-200 border border-rose-800' : 
+                 type === 'success' ? 'bg-emerald-950/90 text-emerald-200 border border-emerald-800' : 
+                 'bg-slate-900/90 text-slate-100 border border-slate-700';
+                 
+      toast.className = `${bg} backdrop-blur-md px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto`;
+      
+      const icon = type === 'error' ? 'alert-circle' : (type === 'success' ? 'check' : 'sparkles');
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i><span>${message}</span>`;
+      
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function setupPWA() {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+      });
+    }
+
+    function handleInstallApp() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(() => { deferredInstallPrompt = null; });
+      } else {
+        // Show instructions depending on platform
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        if (isIOS) {
+          showToast('En iPhone: Toca "Compartir" de Safari y pulsa "Agregar al inicio" 📲');
+        } else {
+          showToast('En Android: Toca los 3 puntos (⋮) de Chrome y pulsa "Instalar aplicación" 📲');
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
